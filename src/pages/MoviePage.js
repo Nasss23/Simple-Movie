@@ -12,7 +12,7 @@ const MoviePage = () => {
     const endOffset = itemOffset + itemsPerPage;
 
 
-    const [pages, setPages] = useState(1)
+    const [pages, setPages] = useState(1);
     const [filter, setFilter] = useState('');
     const [url, setUrl] = useState(`https://api.themoviedb.org/3/movie/popular?api_key=5e5db40364f06babf6b3694c61fb6e6d&page=${pages}`);
     const filterDebounce = useDebounce(filter, 2000);
