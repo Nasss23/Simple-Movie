@@ -1,16 +1,24 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const MovieCard = () => {
+const MovieCard = ({ item }) => {
+    const { title, vote_average, release_date, poster_path, id } = item;
+    const navigate = useNavigate();
+
     return (
         <div>
-            <div className="movie-card rounded-lg p-3 bg-slate-800 text-white ">
-                <img src="https://genk.mediacdn.vn/139269124445442048/2020/2/14/1-15816746144451193748082.jpg" alt="" className="w-full h-[250px] object-cover rounded-lg mb-5" />
-                <h3 className="text-xl font-bold mb-3">Spiderman: Homecoming</h3>
-                <div className="flex items-center justify-between text-sm opacity-50 mb-10">
-                    <span>2017</span>
-                    <span>7.4</span>
+            <div className="flex flex-col h-full p-3 text-white rounded-lg select-none movie-card bg-slate-800">
+                <img src={`https://image.tmdb.org/t/p/w500/${poster_path}`} alt="" className="w-full h-[250px] object-cover rounded-lg mb-5" />
+                <div className="flex flex-col flex-1">
+                    <h3 className="mb-3 text-xl font-bold">{title}</h3>
+                    <div className="flex items-center justify-between mb-10 text-sm opacity-50">
+                        <span>{new Date(release_date).getFullYear()}</span>
+                        <span>{vote_average}</span>
+                    </div>
+                    <button onClick={() => navigate(`/movie/${id}`)} className="w-full px-6 py-3 mt-auto capitalize rounded-lg bg-primary">
+                        Watch now
+                    </button>
                 </div>
-                <button className="py-3 px-6 rounded-lg capitalize bg-primary w-full">Watch now</button>
             </div>
         </div>
     );

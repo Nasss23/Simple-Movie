@@ -9,7 +9,8 @@ module.exports = {
         "body": ["DM Sans", "sans-serif"]
       },
       colors: {
-        primary: "#f62682"
+        primary: "#f62682",
+        secondary: "#6f5cf1"
       }
     },
   },
