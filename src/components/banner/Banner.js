@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import useSWR from 'swr';
 import { SwiperSlide, Swiper } from 'swiper/react';
-import { fetcher } from '../../config';
+import { fetcher } from 'components/apiConfig/config';
 import "swiper/scss";
 import Button from '../button/Button';
 import { useNavigate } from 'react-router-dom';

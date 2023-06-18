@@ -1,9 +1,9 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import useSWR from 'swr';
-import { fetcher, tmdbAPI } from '../config';
 import { SwiperSlide, Swiper } from 'swiper/react';
-import MovieCard from '../components/movies/MovieCard';
+import MovieCard from 'components/movies/MovieCard';
+import { fetcher, tmdbAPI } from 'components/apiConfig/config';
 
 const MovieDetailsPage = () => {
     const { movieId } = useParams();

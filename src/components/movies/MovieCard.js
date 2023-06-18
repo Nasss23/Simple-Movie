@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import Button from '../button/Button';
-import { tmdbAPI } from '../../config';
+import Button from 'components/button/Button';
+import { tmdbAPI } from 'components/apiConfig/config';
 
 const MovieCard = ({ item }) => {
     const { title, vote_average, release_date, poster_path, id } = item;
