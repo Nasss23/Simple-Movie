@@ -1,18 +1,40 @@
 import React from 'react';
 import { SwiperSlide, Swiper } from 'swiper/react';
-import MovieCard from './MovieCard';
+import MovieCard, { MovieCardSkeleton } from './MovieCard';
 import useSWR from 'swr';
 import { fetcher, tmdbAPI } from 'components/apiConfig/config';
+import PropTypes from 'prop-types';
+import { withErrorBoundary } from 'react-error-boundary';
+
 // https://api.themoviedb.org/3/movie/now_playing?api_key=
 const MovieList = ({ type = 'now_playing' }) => {
     const { data, error } = useSWR(
         tmdbAPI.getMovieList(type),
         fetcher
     );
+    const isLoading = !data && !error;
     const movies = data?.results || []
     return (
-        <div>
-            <div className="movie-list">
+        <div className="movie-list">
+            {isLoading &&
+                <>
+                    <Swiper grabCursor={"true"} spaceBetween={40} slidesPerView={"auto"}>
+                        <SwiperSlide>
+                            <MovieCardSkeleton></MovieCardSkeleton>
+                        </SwiperSlide>
+                        <SwiperSlide>
+                            <MovieCardSkeleton></MovieCardSkeleton>
+                        </SwiperSlide> <SwiperSlide>
+                            <MovieCardSkeleton></MovieCardSkeleton>
+                        </SwiperSlide> <SwiperSlide>
+                            <MovieCardSkeleton></MovieCardSkeleton>
+                        </SwiperSlide> <SwiperSlide>
+                            <MovieCardSkeleton></MovieCardSkeleton>
+                        </SwiperSlide>
+                    </Swiper>
+                </>
+            }
+            {!isLoading &&
                 <Swiper grabCursor={"true"} spaceBetween={40} slidesPerView={"auto"}>
                     {movies.length > 0 &&
                         movies.map((item) => (
@@ -21,9 +43,18 @@ const MovieList = ({ type = 'now_playing' }) => {
                             </SwiperSlide>
                         ))}
                 </Swiper>
-            </div>
+            }
         </div>
     );
 };
 
-export default MovieList;
+MovieList.propTypes = {
+    type: PropTypes.string.isRequired
+}
+
+function FallbackComponent() {
+    return <p className='text-red-400 bg-red-50'>Something went with this components </p>
+}
+export default withErrorBoundary(MovieList, {
+    FallbackComponent
+});

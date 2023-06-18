@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import { fetcher, tmdbAPI } from 'components/apiConfig/config';
-import MovieCard from 'components/movies/MovieCard';
+import MovieCard, { MovieCardSkeleton } from 'components/movies/MovieCard';
 import useDebounce from 'hooks/useDebounce';
 import ReactPaginate from 'react-paginate';
+import { v4 } from 'uuid';
 
 const itemsPerPage = 20;
 const MoviePage = () => {
     const [pageCount, setPageCount] = useState(0);
     const [itemOffset, setItemOffset] = useState(0);
-    const endOffset = itemOffset + itemsPerPage;
+    // const endOffset = itemOffset + itemsPerPage;
 
 
     const [pages, setPages] = useState(1);
@@ -34,7 +35,7 @@ const MoviePage = () => {
     // const { page, total_pages } = data;
     useEffect(() => {
         if (!data || !data.total_results) return;
-        const endOffset = itemOffset + itemsPerPage;
+        // const endOffset = itemOffset + itemsPerPage;
         setPageCount(Math.ceil(data.total_results / itemsPerPage))
     }, [data, itemOffset])
 
@@ -73,9 +74,16 @@ const MoviePage = () => {
                     </svg>
                 </button>
             </div>
-            {loading &&
+            {/* {loading &&
                 <div className='w-10 h-10 mx-auto border-4 border-t-4 rounded-full border-primary border-t-transparent animate-spin'></div>
-            }
+            } */}
+            {loading && (
+                <div className="grid grid-cols-5 gap-8">
+                    {new Array(itemsPerPage).fill(0).map(() => (
+                        <MovieCardSkeleton key={v4()}></MovieCardSkeleton>
+                    ))}
+                </div>
+            )}
             <div className="grid grid-cols-5 gap-8">
                 {!loading && movies.length > 0 && movies.map((item) => (
                     <MovieCard key={item.id} item={item}></MovieCard>
